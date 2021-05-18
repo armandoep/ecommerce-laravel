@@ -14,3 +14,5 @@ Para finalizar corra composer install, npm install && npm run dev.
 Y php artisan serve.
 
 ** Los botones de registro y login funcionan y puede crear su usuario y contraseña.
+
+Creado el CRUD de usuarios pero esta pendiente editar.

@@ -70,7 +70,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $user = User::findOrFail($user->id);
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -82,7 +83,13 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $this->validate($request, [
+            'email' => 'email'
+        ]);
+
+        $user->update($request->all());
+        session()->flash('message', 'Usuario actualizado satisfactoriamente.');
+        return redirect(route('users'));
     }
 
     /**
@@ -94,7 +101,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        session()->flash('message', 'User deleted successfully.');
+        session()->flash('message', 'Usuario eliminado satisfactoriamente.');
         return back();
     }
 }

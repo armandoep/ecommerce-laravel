@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Brands;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
 
-class UserController extends Controller
+class BrandsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return view('brands.create');
     }
 
     /**
@@ -40,24 +39,21 @@ class UserController extends Controller
         $request->validate(
             [
                 'name' => 'required',
-                'email' => 'required',
-                'password' => 'required',
-
             ]
         );
 
-        User::create($request->all());
-        session()->flash('message', 'Marca creado satisfactoriamente.');
-        return Redirect::route('users');
+        Brands::create($request->all());
+
+        return Redirect::route('brands');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Brands  $brands
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Brands $brands)
     {
         //
     }
@@ -65,29 +61,25 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Brands  $brands
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Brands $brands)
     {
-        $user = User::findOrFail($user->id);
-        return view('users.edit', compact('user'));
+        $brand = Brands::findOrFail($brands->id);
+        return view('brands.edit', compact('brand'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Brands  $brands
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Brands $brands)
     {
-        $this->validate($request, [
-            'email' => 'email'
-        ]);
-
-        $user->update($request->all());
+        $brands->update($request->all());
         session()->flash('message', 'Usuario actualizado satisfactoriamente.');
         return redirect(route('users'));
     }
@@ -95,13 +87,13 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Brands  $brands
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Brands $brands)
     {
-        $user->delete();
-        session()->flash('message', 'Usuario eliminado satisfactoriamente.');
+        $brands->delete();
+        session()->flash('message', 'Marca eliminada satisfactoriamente.');
         return back();
     }
 }

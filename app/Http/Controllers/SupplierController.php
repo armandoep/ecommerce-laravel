@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
 
-class UserController extends Controller
+class SupplierController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return view('suppliers.create');
     }
 
     /**
@@ -40,24 +39,24 @@ class UserController extends Controller
         $request->validate(
             [
                 'name' => 'required',
-                'email' => 'required',
-                'password' => 'required',
-
+                'email' => 'email|required',
+                'address' => 'required',
+                'nit' => 'min:7|required',
             ]
         );
 
-        User::create($request->all());
-        session()->flash('message', 'Marca creado satisfactoriamente.');
-        return Redirect::route('users');
+        Supplier::create($request->all());
+
+        return Redirect::route('suppliers');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Supplier $supplier)
     {
         //
     }
@@ -65,43 +64,39 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Supplier $supplier)
     {
-        $user = User::findOrFail($user->id);
-        return view('users.edit', compact('user'));
+        $supplier = Supplier::findOrFail($supplier->id);
+        return view('suppliers.edit', compact('supplier'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Supplier $supplier)
     {
-        $this->validate($request, [
-            'email' => 'email'
-        ]);
-
-        $user->update($request->all());
-        session()->flash('message', 'Usuario actualizado satisfactoriamente.');
-        return redirect(route('users'));
+        $supplier->update($request->all());
+        session()->flash('message', 'Proveedor actualizado satisfactoriamente.');
+        return redirect(route('suppliers'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Supplier $supplier)
     {
-        $user->delete();
-        session()->flash('message', 'Usuario eliminado satisfactoriamente.');
+        $supplier->delete();
+        session()->flash('message', 'Proveedor eliminado satisfactoriamente.');
         return back();
     }
 }

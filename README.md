@@ -15,4 +15,4 @@ Y php artisan serve.
 
 ** Los botones de registro y login funcionan y puede crear su usuario y contraseña.
 
-Terminado el CRUD de usuarios.
+Terminados todos los CRUD con sus controladores y protegidas las rutas.

@@ -27,25 +27,29 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->group(function() {
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/users', UsersTable::class)->name('users');
-Route::middleware(['auth:sanctum', 'verified'])->resource('/users', UserController::class)->except('index');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/brands', BrandsTable::class)->name('brands');
+    Route::get('/users', UsersTable::class)->name('users');
+    Route::resource('/users', UserController::class)->except('index');
 
-Route::middleware(['auth:sanctum', 'verified'])->resource('/brands', BrandsController::class)->except('index');
+    Route::get('/brands', BrandsTable::class)->name('brands');
 
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/suppliers', SuppliersTable::class)->name('suppliers');
-
-Route::middleware(['auth:sanctum', 'verified'])->resource('/suppliers', SupplierController::class)->except('index');
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/categories', CategoriesTable::class)->name('categories');
-Route::middleware(['auth:sanctum', 'verified'])->resource('/categories', CategoryController::class)->except('index');
+    Route::resource('/brands', BrandsController::class)->except('index');
 
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/products', ProductsTable::class)->name('products');
-Route::middleware(['auth:sanctum', 'verified'])->resource('/products', ProductController::class)->except('index');
+    Route::get('/suppliers', SuppliersTable::class)->name('suppliers');
+
+    Route::resource('/suppliers', SupplierController::class)->except('index');
+
+    Route::get('/categories', CategoriesTable::class)->name('categories');
+    Route::resource('/categories', CategoryController::class)->except('index');
+
+
+    Route::get('/products', ProductsTable::class)->name('products');
+    Route::resource('/products', ProductController::class)->except('index');
+});
+

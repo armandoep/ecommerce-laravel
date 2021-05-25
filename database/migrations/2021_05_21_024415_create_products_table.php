@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('brand_id');
-            $table->foreign('brand_id')->references('id')->on('brands');
+            // $table->foreign('brand_id')->references('id')->on('brands'); Lo quité porque me da error la relación
             $table->integer('supplier_id');
             $table->foreign('supplier_id')->references('id')->on('suppliers');
             $table->integer('category_id');
